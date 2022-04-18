@@ -10,7 +10,7 @@ namespace MarketingBox.Postback.Api.Controllers
 {
     
     [ApiController]
-    [Route("/api")]
+    [Route("[controller]")]
     public class BrandPostbackController : ControllerBase
     {
         private readonly IMapper _mapper;

@@ -74,7 +74,7 @@ namespace MarketingBox.Postback.Api
         public void ConfigureContainer(ContainerBuilder builder)
         {
             builder.RegisterModule<SettingsModule>();
-            builder.RegisterModule<ServiceModule>();
+            builder.RegisterModule<ClientModule>();
         }
     }
 }

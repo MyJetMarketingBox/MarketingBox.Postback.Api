@@ -35,27 +35,24 @@ namespace MarketingBox.Postback.Api.Models
         public string LastName { get; set; }
 
         [Required]
-        [IsValidPassword]
         [StringLength(128, MinimumLength = 6)]
         [LogMasked(PreserveLength = true)]
         public string Password { get; set; }
 
         [Required]
-        [IsValidEmail]
         [LogMasked(PreserveLength = true, ShowFirst = 2, ShowLast = 2)]
         public string Email { get; set; }
 
+        [Phone, StringLength(20, MinimumLength = 7)]
         [LogMasked(PreserveLength = true, ShowFirst = 2, ShowLast = 2)]
         public string Phone { get; set; }
 
         [Required]
-        [RegularExpression(@"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$", ErrorMessage = "IP address has incorrect format.")]
+        [Phone, StringLength(15, MinimumLength = 7)]
         [LogMasked(PreserveLength = true, ShowFirst = 2, ShowLast = 2)]
         public string Ip { get; set; }
-
        
         [Required]
-        [IsEnum]
         public CountryCodeType? CountryCodeType { get; set; }
 
         [Required]
