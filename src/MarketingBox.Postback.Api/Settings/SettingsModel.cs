@@ -5,16 +5,16 @@ namespace MarketingBox.Postback.Api.Settings
 {
     public class SettingsModel
     {
-        [YamlProperty("ExternalReferenceProxyApi.SeqServiceUrl")]
+        [YamlProperty("PostbackApi.SeqServiceUrl")]
         public string SeqServiceUrl { get; set; }
 
-        [YamlProperty("ExternalReferenceProxyApi.ZipkinUrl")]
+        [YamlProperty("PostbackApi.ZipkinUrl")]
         public string ZipkinUrl { get; set; }
 
-        [YamlProperty("ExternalReferenceProxyApi.ElkLogs")]
+        [YamlProperty("PostbackApi.ElkLogs")]
         public LogElkSettings ElkLogs { get; set; }
 
-        [YamlProperty("ExternalReferenceProxyApi.PostbackServiceUrl")]
+        [YamlProperty("PostbackApi.PostbackServiceUrl")]
         public string PostbackServiceUrl { get; set; }
     }
 }

@@ -1,16 +1,34 @@
 using System.Threading.Tasks;
+using AutoMapper;
+using MarketingBox.Postback.Api.Models;
+using MarketingBox.Postback.Service.Domain.Models.Requests;
+using MarketingBox.Postback.Service.Grpc;
+using MarketingBox.Sdk.Common.Extensions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketingBox.Postback.Api.Controllers
 {
+    
     [ApiController]
     [Route("/api")]
     public class BrandPostbackController : ControllerBase
     {
-        [HttpGet("")]
-        public async Task<ActionResult> UpsertInfoFromBrand()
+        private readonly IMapper _mapper;
+        private readonly IBrandPostbackService _postbackService;
+
+        public BrandPostbackController(IBrandPostbackService postbackService, IMapper mapper)
         {
-            return await Task.FromResult(new AcceptedResult());
+            _postbackService = postbackService;
+            _mapper = mapper;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpsertInfoFromBrand(
+            [FromBody] BrandPostbackRequestModel brandPostbackRequestModel)
+        {
+            var request = _mapper.Map<BrandPostbackRequest>(brandPostbackRequestModel);
+            var result = await _postbackService.ProcessRequestAsync(request);
+            return this.ProcessResult(result);
         }
     }
 }

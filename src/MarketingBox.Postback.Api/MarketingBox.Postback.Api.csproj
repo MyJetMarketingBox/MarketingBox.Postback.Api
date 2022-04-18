@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <UserSecretsId>F04B06FD-DA2D-43A9-8F81-966B92A816DA</UserSecretsId>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>9</LangVersion>
     <RootNamespace>MarketingBox.Postback.Api</RootNamespace>
   </PropertyGroup>
 
@@ -12,8 +12,8 @@
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="Grpc.AspNetCore" Version="2.42.0" />
     <PackageReference Include="JetBrains.Annotations" Version="2021.3.0" />
-    <PackageReference Include="MarketingBox.Sdk.Common" Version="1.0.10" />
-    <PackageReference Include="MarketingBox.TrackingLink.Service.Client" Version="1.0.4" />
+    <PackageReference Include="MarketingBox.Postback.Service.Client" Version="1.0.18" />
+    <PackageReference Include="MarketingBox.Sdk.Common" Version="1.0.12" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="6.0.0" />
     <PackageReference Include="MyJetWallet.Sdk.GrpcMetrics" Version="2.0.4" />
@@ -39,11 +39,6 @@
     <None Update="Dockerfile">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="MapperProfiles" />
-    <Folder Include="Models" />
   </ItemGroup>
 
 </Project>
