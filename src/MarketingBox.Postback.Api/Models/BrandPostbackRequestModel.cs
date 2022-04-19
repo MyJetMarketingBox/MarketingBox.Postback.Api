@@ -10,6 +10,8 @@ namespace MarketingBox.Postback.Api.Models
     public class BrandPostbackRequestModel
     {
         [Required]
+        public long ClickId { get; set; }
+        [Required]
         public BrandEventType? EventType { get; set; }
         
         [Required]
