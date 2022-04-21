@@ -1,6 +1,8 @@
 ﻿using System.Reflection;
 using Autofac;
+using AutoWrapper;
 using MarketingBox.Postback.Api.Modules;
+using MarketingBox.Sdk.Common.Models.RestApi;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -40,6 +42,13 @@ namespace MarketingBox.Postback.Api
             }
 
             app.UseRouting();
+
+            app.UseApiResponseAndExceptionWrapper<ApiResponseMap>(
+                new AutoWrapperOptions
+                {
+                    UseCustomSchema = true,
+                    IgnoreWrapForOkRequests = true
+                });
 
             app.UseMetricServer();
 
