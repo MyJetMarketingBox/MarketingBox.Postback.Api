@@ -45,12 +45,12 @@ namespace MarketingBox.Postback.Api.Models
         [LogMasked(PreserveLength = true, ShowFirst = 2, ShowLast = 2)]
         public string Email { get; set; }
 
-        [Phone, StringLength(20, MinimumLength = 7)]
+        [Required, Phone, StringLength(20, MinimumLength = 7)]
         [LogMasked(PreserveLength = true, ShowFirst = 2, ShowLast = 2)]
         public string Phone { get; set; }
 
         [Required]
-        [Phone, StringLength(15, MinimumLength = 7)]
+        [StringLength(15, MinimumLength = 7)]
         [LogMasked(PreserveLength = true, ShowFirst = 2, ShowLast = 2)]
         public string Ip { get; set; }
        
