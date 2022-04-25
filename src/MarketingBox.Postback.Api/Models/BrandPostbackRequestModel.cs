@@ -41,7 +41,7 @@ namespace MarketingBox.Postback.Api.Models
         [LogMasked(PreserveLength = true)]
         public string Password { get; set; }
 
-        [Required]
+        [Required, MinLength(7)]
         [LogMasked(PreserveLength = true, ShowFirst = 2, ShowLast = 2)]
         public string Email { get; set; }
 
