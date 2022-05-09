@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using AutoMapper;
 using MarketingBox.Postback.Api.Models;
@@ -8,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MarketingBox.Postback.Api.Controllers
 {
-    
     [ApiController]
     [Route("[controller]")]
     public class BrandPostbackController : ControllerBase
@@ -26,9 +26,18 @@ namespace MarketingBox.Postback.Api.Controllers
         public async Task<IActionResult> UpsertInfoFromBrand(
             [FromBody] BrandPostbackRequestModel brandPostbackRequestModel)
         {
-            var request = _mapper.Map<BrandPostbackRequest>(brandPostbackRequestModel);
-            var result = await _postbackService.ProcessRequestAsync(request);
-            return this.ProcessResult(result);
+            try
+            {
+                brandPostbackRequestModel.ValidateEntity();
+
+                var request = _mapper.Map<BrandPostbackRequest>(brandPostbackRequestModel);
+                var result = await _postbackService.ProcessRequestAsync(request);
+                return this.ProcessResult(result);
+            }
+            catch (Exception e)
+            {
+                return e.Failed();
+            }
         }
     }
 }

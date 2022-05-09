@@ -6,6 +6,7 @@ using MarketingBox.Sdk.Common.Models.RestApi;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyJetWallet.Sdk.GrpcSchema;
@@ -32,6 +33,11 @@ namespace MarketingBox.Postback.Api
 
             services.AddMyTelemetry("SP-", Program.Settings.ZipkinUrl);
             services.AddAutoMapper(typeof(Startup));
+            
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -41,14 +47,14 @@ namespace MarketingBox.Postback.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseRouting();
-
             app.UseApiResponseAndExceptionWrapper<ApiResponseMap>(
                 new AutoWrapperOptions
                 {
-                    UseCustomSchema = true,
+                    // UseCustomSchema = true,
                     IgnoreWrapForOkRequests = true
                 });
+            
+            app.UseRouting();
 
             app.UseMetricServer();
 
