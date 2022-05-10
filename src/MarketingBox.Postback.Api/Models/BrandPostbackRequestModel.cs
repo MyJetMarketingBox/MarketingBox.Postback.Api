@@ -93,7 +93,7 @@ namespace MarketingBox.Postback.Api.Models
     {
         [StringLength(128, MinimumLength = 1)] public string CustomerId { get; set; }
         [StringLength(128, MinimumLength = 1)] public string Token { get; set; }
-        [StringLength(128, MinimumLength = 1)] public string LoginUrl { get; set; }
+        [StringLength(2500, MinimumLength = 1)] public string LoginUrl { get; set; }
         [StringLength(128, MinimumLength = 1)] public string Brand { get; set; }
     }
 }
