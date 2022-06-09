@@ -16,5 +16,11 @@ namespace MarketingBox.Postback.Api.Settings
 
         [YamlProperty("PostbackApi.PostbackServiceUrl")]
         public string PostbackServiceUrl { get; set; }
+
+        [YamlProperty("PostbackApi.AffiliateServiceUrl")]
+        public string AffiliateServiceUrl { get; set; }
+
+        [YamlProperty("PostbackApi.MyNoSqlReaderHostPort")]
+        public string MyNoSqlReaderHostPort { get; set; }
     }
 }

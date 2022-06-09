@@ -2,10 +2,12 @@
 using Autofac;
 using AutoWrapper;
 using MarketingBox.Postback.Api.Modules;
+using MarketingBox.Sdk.Common.Extensions;
 using MarketingBox.Sdk.Common.Models.RestApi;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MyJetWallet.Sdk.GrpcSchema;
@@ -24,14 +26,17 @@ namespace MarketingBox.Postback.Api
             services.AddHostedService<ApplicationLifetimeManager>();
             
             services.AddControllers();
-            services.AddSwaggerDocument(o =>
-            {
-                o.Title = "Postback API";
-                o.GenerateEnumMappingDescription = true;
-            });
+
+            services.SetupSwaggerDocumentation();
 
             services.AddMyTelemetry("SP-", Program.Settings.ZipkinUrl);
+            
             services.AddAutoMapper(typeof(Startup));
+
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -40,7 +45,6 @@ namespace MarketingBox.Postback.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseRouting();
 
             app.UseApiResponseAndExceptionWrapper<ApiResponseMap>(
@@ -49,6 +53,8 @@ namespace MarketingBox.Postback.Api
                     UseCustomSchema = true,
                     IgnoreWrapForOkRequests = true
                 });
+            
+            app.UseExceptions();
 
             app.UseMetricServer();
 

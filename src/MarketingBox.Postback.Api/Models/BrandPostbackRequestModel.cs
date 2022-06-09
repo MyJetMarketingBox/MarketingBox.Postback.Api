@@ -3,28 +3,34 @@ using Destructurama.Attributed;
 using MarketingBox.Postback.Service.Domain.Models;
 using MarketingBox.Sdk.Common.Attributes;
 using MarketingBox.Sdk.Common.Enums;
+using MarketingBox.Sdk.Common.Models;
 using CountryCodeType = MarketingBox.Sdk.Common.Enums.CountryCodeType;
 
 namespace MarketingBox.Postback.Api.Models
 {
-    public class BrandPostbackRequestModel
+    public class BrandPostbackRequestModel : ValidatableEntity
     {
         [Required]
+        [AdvancedCompare(ComparisonType.GreaterThan, 0)]
         public long ClickId { get; set; }
-        [Required]
+
+        [Required] 
+        [IsEnum] 
         public BrandEventType? EventType { get; set; }
-        
+
         [Required]
         public GeneralInfoModel GeneralInfo { get; set; }
 
+        [RequiredOnlyIf(nameof(EventType), BrandEventType.ChangedCrm)]
+        [IsEnum]
         public CrmStatus? CrmStatus { get; set; }
 
         public AdditionalInfoModel AdditionalInfo { get; set; }
-        
+
         public RegistrationBrandInfoModel RegistrationBrandInfo { get; set; }
     }
 
-    public class GeneralInfoModel
+    public class GeneralInfoModel : ValidatableEntity
     {
         [Required]
         [StringLength(50, MinimumLength = 1)]
@@ -37,66 +43,57 @@ namespace MarketingBox.Postback.Api.Models
         public string LastName { get; set; }
 
         [Required]
+        [IsValidPassword]
         [StringLength(128, MinimumLength = 6)]
         [LogMasked(PreserveLength = true)]
         public string Password { get; set; }
 
-        [Required, StringLength(320, MinimumLength = 6)]
+        [Required]
+        [IsValidEmail]
         [LogMasked(PreserveLength = true, ShowFirst = 2, ShowLast = 2)]
         public string Email { get; set; }
 
-        [Required, Phone, StringLength(20, MinimumLength = 7)]
+        [Required]
+        [Phone]
+        [StringLength(20, MinimumLength = 7)]
         [LogMasked(PreserveLength = true, ShowFirst = 2, ShowLast = 2)]
         public string Phone { get; set; }
 
         [Required]
-        [StringLength(15, MinimumLength = 7)]
+        [RegularExpression(@"^(?:[0-9]{1,3}\.){3}[0-9]{1,3}$", ErrorMessage = "IP address has incorrect format.")]
         [LogMasked(PreserveLength = true, ShowFirst = 2, ShowLast = 2)]
         public string Ip { get; set; }
-       
-        [Required]
+
+        [Required] 
+        [IsEnum] 
         public CountryCodeType? CountryCodeType { get; set; }
 
         [Required]
         [StringLength(3, MinimumLength = 2)]
         public string CountryCode { get; set; }
     }
-    
-    public class AdditionalInfoModel
+
+    public class AdditionalInfoModel : ValidatableEntity
     {
-        public string Sub1 { get; set; }
-
-        public string Sub2 { get; set; }
-
-        public string Sub3 { get; set; }
-
-        public string Sub4 { get; set; }
-
-        public string Sub5 { get; set; }
-
-        public string Sub6 { get; set; }
-
-        public string Sub7 { get; set; }
-
-        public string Sub8 { get; set; }
-
-        public string Sub9 { get; set; }
-
-        public string Sub10 { get; set; }
-
-        public string Funnel { get; set; }
-
-        public string AffCode { get; set; }
+        [StringLength(128, MinimumLength = 1)] public string Sub1 { get; set; }
+        [StringLength(128, MinimumLength = 1)] public string Sub2 { get; set; }
+        [StringLength(128, MinimumLength = 1)] public string Sub3 { get; set; }
+        [StringLength(128, MinimumLength = 1)] public string Sub4 { get; set; }
+        [StringLength(128, MinimumLength = 1)] public string Sub5 { get; set; }
+        [StringLength(128, MinimumLength = 1)] public string Sub6 { get; set; }
+        [StringLength(128, MinimumLength = 1)] public string Sub7 { get; set; }
+        [StringLength(128, MinimumLength = 1)] public string Sub8 { get; set; }
+        [StringLength(128, MinimumLength = 1)] public string Sub9 { get; set; }
+        [StringLength(128, MinimumLength = 1)] public string Sub10 { get; set; }
+        [StringLength(128, MinimumLength = 1)] public string Funnel { get; set; }
+        [StringLength(128, MinimumLength = 1)] public string AffCode { get; set; }
     }
-    
-    public class RegistrationBrandInfoModel
+
+    public class RegistrationBrandInfoModel : ValidatableEntity
     {
-        public string CustomerId { get; set; }
-
-        public string Token { get; set; }
-
-        public string LoginUrl { get; set; }
-
-        public string Brand { get; set; }
+        [StringLength(128, MinimumLength = 1)] public string CustomerId { get; set; }
+        [StringLength(128, MinimumLength = 1)] public string Token { get; set; }
+        [StringLength(2500, MinimumLength = 1)] public string LoginUrl { get; set; }
+        [StringLength(128, MinimumLength = 1)] public string Brand { get; set; }
     }
 }
