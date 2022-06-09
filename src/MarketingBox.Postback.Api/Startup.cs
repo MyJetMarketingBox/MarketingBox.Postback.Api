@@ -2,6 +2,7 @@
 using Autofac;
 using AutoWrapper;
 using MarketingBox.Postback.Api.Modules;
+using MarketingBox.Sdk.Common.Extensions;
 using MarketingBox.Sdk.Common.Models.RestApi;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -25,15 +26,13 @@ namespace MarketingBox.Postback.Api
             services.AddHostedService<ApplicationLifetimeManager>();
             
             services.AddControllers();
-            services.AddSwaggerDocument(o =>
-            {
-                o.Title = "Postback API";
-                o.GenerateEnumMappingDescription = true;
-            });
+
+            services.SetupSwaggerDocumentation();
 
             services.AddMyTelemetry("SP-", Program.Settings.ZipkinUrl);
-            services.AddAutoMapper(typeof(Startup));
             
+            services.AddAutoMapper(typeof(Startup));
+
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 options.SuppressModelStateInvalidFilter = true;
@@ -46,15 +45,16 @@ namespace MarketingBox.Postback.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseRouting();
 
             app.UseApiResponseAndExceptionWrapper<ApiResponseMap>(
                 new AutoWrapperOptions
                 {
-                    // UseCustomSchema = true,
+                    UseCustomSchema = true,
                     IgnoreWrapForOkRequests = true
                 });
             
-            app.UseRouting();
+            app.UseExceptions();
 
             app.UseMetricServer();
 
