@@ -17,7 +17,7 @@ namespace MarketingBox.Postback.Api.Controllers
     public class BrandPostbackController : ControllerBase
     {
         private readonly IMapper _mapper;
-        private IAffiliateClient _affiliateClient;
+        private readonly IAffiliateClient _affiliateClient;
         private readonly IBrandPostbackService _postbackService;
 
         public BrandPostbackController(
